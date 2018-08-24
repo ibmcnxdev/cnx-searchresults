@@ -88,7 +88,7 @@ if (typeof (Tools) == "undefined") {
         initListener: function () {
             observer = new MutationObserver(function (mutations) {
                 Tools.updateResults();
-                console.log("Number of mutations "+mutations.length);                
+                Tools.debug("Number of mutations " + mutations.length);
             });
             var config = { attributes: true, childList: true };
             observer.observe(dojo.byId("contentContainer_results"), config);
