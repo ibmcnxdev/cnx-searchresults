@@ -90,7 +90,7 @@ if (typeof (Tools) == "undefined") {
                 Tools.updateResults();
                 Tools.debug("Number of mutations " + mutations.length);
             });
-            var config = { attributes: true, childList: true };
+            var config = { childList: true };
             observer.observe(dojo.byId("contentContainer_results"), config);
 
         }
