@@ -2,11 +2,11 @@
 // @copyright    Belsoft Collaboration AG 2018
 
 // ==/UserScript==
-if (typeof(Tools) == "undefined") {
+if (typeof (Tools) == "undefined") {
     var Tools = {
         defaultWaitTime: 100,
         debugEnabled: false,
-        maxLoopCount:300,       
+        maxLoopCount: 300,
         waitFor: function (callback, elXpath, elXpathRoot, maxInter, waitTime) {
             Tools.debug("wait For called");
             if (!elXpathRoot) var elXpathRoot = dojo.body();
@@ -26,7 +26,7 @@ if (typeof(Tools) == "undefined") {
                 }
             }, waitTime);
         },
-        
+
         fireClick: function (element) {
             Tools.debug("Clicking on element ");
             if (element == undefined) { return };
@@ -62,33 +62,47 @@ if (typeof(Tools) == "undefined") {
         warn: function (msg) {
             console.warn(msg);
         },
-        error:function(msg){
+        error: function (msg) {
             console.error(msg);
         },
-        
-            updateResults: function () {
-                var results = dojo.query(".icSearchMainAction");
-                if (results != undefined) {
-                    dojo.forEach(results, function (result) {
+
+        updateResults: function () {
+            var results = dojo.query(".icSearchMainAction");
+            if (results != undefined) {
+                dojo.forEach(results, function (result) {
+                    if (dojo.getAttr(result, "target") != "_blank") {
                         dojo.setAttr(result, "target", "_blank");
-                    });
-                }
-    
-                results = dojo.query(".lconnSearchBookmarkUrl");
-                if (results != undefined) {
-                    dojo.forEach(results, function (result) {
-                        dojo.setAttr(result, "target", "_blank");
-                    });
-                }
+                    }
+                });
             }
-        
-        
+
+            results = dojo.query(".lconnSearchBookmarkUrl");
+            if (results != undefined) {
+                dojo.forEach(results, function (result) {
+                    if (dojo.getAttr(result, "target") != "_blank") {
+                        dojo.setAttr(result, "target", "_blank");
+                    }
+                });
+            }
+        },
+        initListener: function () {
+            observer = new MutationObserver(function (mutations) {
+                Tools.updateResults();
+                console.log("Number of mutations "+mutations.length);                
+            });
+            var config = { attributes: true, childList: true };
+            observer.observe(dojo.byId("contentContainer_results"), config);
+
+        }
+
+
     };
     if (typeof (dojo) != "undefined") {
+        Tools.waitFor(Tools.initListener, "#contentContainer_results");
         Tools.waitFor(Tools.updateResults, "#contentContainer_results_View");
     }
 }
 
- 
+
 
 
