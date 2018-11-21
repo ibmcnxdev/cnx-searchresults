@@ -6,7 +6,7 @@ This small app adds a simple "target=_blank" to all the results in the connectio
 
 ## Setup
 
-For on premises just clone this repository to your customizer data directory and import the *search.json* to the Appregistry
+For on premises just clone this repository to your customizer data directory and import the *search.json* to the Appregistry.
 
 ## Disclaimer
 
